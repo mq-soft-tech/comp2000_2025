@@ -2,10 +2,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Cell {
-    private final int row;
-    private final int col;
-    private final int cellSize;
-    private final int offset; // margin from the panel’s top-left
+    private int row;
+    private int col;
+    private int cellSize;
+    private int offset; // margin from the panel’s top-left
 
     public Cell(int row, int col, int cellSize, int offset) {
         this.row = row;
