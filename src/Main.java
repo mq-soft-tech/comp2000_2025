@@ -22,7 +22,7 @@ public class Main extends JFrame {
     @Override
     public void paint(Graphics g) {
       g.setColor(java.awt.Color.BLACK);
-      g.drawRect(10, 20, 700, 700);
+      g.drawRect(10, 10, 700, 700);
       //g.setColor(java.awt.Color.WHITE);
       //g.fillRect(10, 10, 700, 700);
       grid.paint(g); 
