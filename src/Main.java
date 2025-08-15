@@ -37,11 +37,12 @@ public class Main extends JFrame {
     }
 
   class Grid extends JPanel{
-
+    final static int NUM_ROWS = 20;
+    final static int NUM_COLS = 20;
   }
 
   class Cell extends JPanel{
-    
+    final static int CELL_LEN = 35;
   }
 
     private Main() {
