@@ -27,7 +27,7 @@ public class Main extends JFrame {
             int y = row * CELL_LEN + OFFSET;
             g.setColor(java.awt.Color.BLACK);
             g.drawRect(x, y, CELL_LEN, CELL_LEN);
-            g.setColor(java.awt.Color.GRAY);
+            g.setColor(java.awt.Color.WHITE);
             g.fillRect(x, y, CELL_LEN, CELL_LEN);
           }
         }
@@ -35,6 +35,14 @@ public class Main extends JFrame {
 	g.drawRect(10, 10, 700, 700);
       }
     }
+
+  class Grid extends JPanel{
+
+  }
+
+  class Cell extends JPanel{
+    
+  }
 
     private Main() {
       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
