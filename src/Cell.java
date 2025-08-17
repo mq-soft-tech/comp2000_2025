@@ -17,6 +17,8 @@ public class Cell {
         else{
             g.setColor(Color.WHITE);
         }
+        g.fillRect(x, y, size, size);
+        g.setColor(Color.BLACK);
         g.drawRect(x, y, size, size);
     }
     boolean contains (Point p){
