@@ -11,7 +11,8 @@ public App(){
 }
 
 public void paint(Graphics g){
-    grid.paint(g);
+    System.out.println(getMousePosition());
+    grid.paint(g, getMousePosition());
     
     
 }
