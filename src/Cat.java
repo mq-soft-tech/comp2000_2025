@@ -8,7 +8,7 @@ public class Cat extends Actor {
     public Cat(){
         super();
         colour = Color.BLUE;
-        location = new Cell(80, 30);
+        location = new Cell(60, 20);
     }
 
     public void paint(Graphics g){
