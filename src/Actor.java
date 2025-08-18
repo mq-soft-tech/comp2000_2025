@@ -8,6 +8,7 @@ public class Actor {
 
     public void paint(Graphics g, Color colour, Cell cell){
         g.setColor(colour);
+        g.fillOval(cell.x, cell.y, 10, 10);
         g.drawOval(cell.x, cell.y, 10, 10);
     }
 }
