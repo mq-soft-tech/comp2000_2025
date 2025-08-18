@@ -6,7 +6,7 @@ public class Cat extends Actor {
 
     public Cat(){
         super();
-        colour = Color.GREEN;
+        colour = Color.BLUE;
     }
 
     public void paint(Graphics g){
