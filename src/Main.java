@@ -15,10 +15,25 @@ public class Main extends JFrame {
         setPreferredSize(new Dimension(720, 720));
       }
 
+      public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawGrid(g);
+      }
+
+      public void drawGrid(Graphics g) {
+        g.setColor(java.awt.Color.LIGHT_GRAY);
+        for (int i = 0; i < 720; i += 20) {
+          g.drawLine(i, 0, i, 720);
+          g.drawLine(0, i, 720, i);
+        }
+      }
+
       @Override
       public void paint(Graphics g) {
 	g.setColor(java.awt.Color.BLACK);
 	g.drawRect(10, 10, 700, 700);
+        super.paint(g);
+        paintComponent(g);
       }
     }
 
