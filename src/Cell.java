@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Cell {
+public class Cell extends Rectangle {
   // fields
   int x;
   int y;
@@ -8,8 +8,8 @@ public class Cell {
 
   // constructors
   public Cell(int inX, int inY) {
-    x = inX;
-    y = inY;
+    super.x = inX;
+    super.y = inY;
   }
 
   // methods
