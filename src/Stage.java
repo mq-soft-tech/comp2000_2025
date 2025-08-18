@@ -5,9 +5,9 @@ import java.awt.Point;
 public class Stage {
     Grid GridA;
 
-    Actor cat;
-    Actor bird;
-    Actor dog;
+    Cat cat;
+    Bird bird;
+    Dog dog;
 
     public Stage(){
         GridA = new Grid();

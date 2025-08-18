@@ -12,7 +12,6 @@ public class Bird extends Actor {
     }
 
     public void paint(Graphics g){
-        g.setColor(colour);
-        g.drawOval(location.x, location.y, 10, 10);
+        super.paint(g, colour, location);
     }
 }
