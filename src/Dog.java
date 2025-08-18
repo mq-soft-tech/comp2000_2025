@@ -3,13 +3,16 @@ import java.awt.Graphics;
 
 public class Dog extends Actor {
     Color colour;
+    Cell location;
 
     public Dog(){
         super();
         colour = Color.YELLOW;
+        location = new Cell(100, 100);
     }
 
     public void paint(Graphics g){
-        
+        g.setColor(colour);
+        g.drawOval(location.x, location.y, 10, 10);
     }
 }
