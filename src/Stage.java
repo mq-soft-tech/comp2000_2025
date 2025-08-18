@@ -16,7 +16,16 @@ public class Stage {
         dog = new Dog();
     }
 
-    public void paint(Point mousePos){
+     public Stage(Grid GridX){
+        GridA = GridX;
+
+        GridA = new Grid();
+        cat = new Cat();
+        bird = new Bird();
+        dog = new Dog();
+    }
+    public void paint(Graphics g, Point mousePos){
+        Grid.paint(g, getMousePosition());
 
     }
 
