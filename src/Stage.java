@@ -17,7 +17,6 @@ public class Stage {
     }
 
     public void paint(Point mousePos){
-
     }
 
 }
