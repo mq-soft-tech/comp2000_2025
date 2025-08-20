@@ -19,6 +19,13 @@ public class Main extends JFrame {
       public void paint(Graphics g) {
 	g.setColor(java.awt.Color.BLACK);
 	g.drawRect(10, 10, 700, 700);
+
+   int n = 20;
+   while (n-->0){
+     g.drawLine(10,(35*n)+10,710,(35*n)+10);
+     g.drawLine((35*n)+10,10,(35*n)+10,710);
+   }
+
       }
     }
 
