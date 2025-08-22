@@ -36,7 +36,7 @@ Anything that is a `JFrame` or `JPanel` can find out the position of the mouse u
 
 ## Week 4 Application Exercise
 
-This week we will add characters to the game.  There are three different characters (cat, dog, and bird) and each looks different when drawn to the grid.  Your task is to design a few new classes/objects to best achieve this outcome.  Inheritance is likely to play a big role in a good design which can grow as the program grows.  To keep things simple, each character can just be a different colour - you don't need sprites for them.  The file `4_goal.png` is a screenshot of my solution running but the real value is in the design that was done to achieve this outcome. During the synchronous reporting, each team will put up a UML diagram as well as showing off their code in action.
+This week we will add characters to the game.  There are three different characters (cat, dog, and bird) and each looks different when drawn to the grid.  Your task is to design a few new classes/objects to best achieve this outcome.  Inheritance is likely to play a big role in a good design which can grow as the program grows.  To keep things simple, each character can just be a different colour - you don't need sprites for them.  The file `doc/4_goal.png` is a screenshot of my solution running but the real value is in the design that was done to achieve this outcome. During the synchronous reporting, each team will put up a UML diagram as well as showing off their code in action.
 
 Your team should go about this task any way you like but we have added a breakdown of how _we_ went about it below as a guide.  We prefer you don't follow the guide, but it is there if you need it.  Note that the solutions we publish will follow this guide.  Our guide is structured as hints for the next 4 tasks towards one of the solutions.  I.e. _tasks 6-9 are not your goal for this class, but they are possible tasks you might do to achieve this week's goal.
 
@@ -60,7 +60,7 @@ You can place each of these three `Actor` objects in grid locations of your choo
 
 ### Task 8
 
-Have a close look at your `Cat`, `Dog` and `Mouse` classes.  If they are anything like mine they are _all the same except for the colour they use_.  This repetition is "a bad thing" because if the same thing is done in three different places, we need to remember that updating one requires us to update all three.
+Have a close look at your `Cat`, `Dog` and `Bird` classes.  If they are anything like mine they are _all the same except for the colour they use_.  This repetition is "a bad thing" because if the same thing is done in three different places, we need to remember that updating one requires us to update all three.
 
 Is there a place that you could put all the common parts?
 
