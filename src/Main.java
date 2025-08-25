@@ -31,9 +31,8 @@ public class Main extends JFrame {
 
       @Override
       public void paint(Graphics g) {
-        stage.paint(g, getMousePosition());
-        super.paint(g);
-        paintComponent(g);
+	g.setColor(java.awt.Color.BLACK);
+	g.drawRect(10, 10, 700, 700);
       }
     }
 
