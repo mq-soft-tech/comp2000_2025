@@ -40,7 +40,7 @@ This week we will add characters to the game.  There are three different charact
 
 Your team should go about this task any way you like but we have added a breakdown of how _we_ went about it below as a guide.  We prefer you don't follow the guide, but it is there if you need it.  Note that the solutions we publish will follow this guide.  Our guide is structured as hints for the next 4 tasks towards one of the solutions.  I.e. _tasks 6-9 are not your goal for this class, but they are possible tasks you might do to achieve this week's goal.
 
-### Task 6
+### Task 6 DONE
 
 Our `Cell` class is really a specialised rectangle and the Java API already has a `Rectangle` class.  Have `Cell` inherit from `java.awt.Rectangle` (https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Rectangle.html).  It will be good to call `super` in the `Cell` constructor and to use the `contains` method that comes in `Rectangle` instead of your own.  NB:  The `contains` we wrote was graceful when given a `null` pointer for the point, the one from `Rectangle` is not, you will need to "protect" it in some way.
 
