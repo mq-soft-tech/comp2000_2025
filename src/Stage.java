@@ -2,7 +2,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 public class Stage {
-    Grid grid = new Grid();
+    Grid grid;
     Actor cat;
     Actor dog;
     Actor bird;
