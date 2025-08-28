@@ -12,6 +12,8 @@ public class Cell extends Rectangle{
   // constructors
   public Cell(int x, int y) {
     super(x, y, size, size);
+    this.x = x;
+    this.y = y;
   }
 
   // methods
@@ -26,6 +28,7 @@ public class Cell extends Rectangle{
     g.drawRect(x, y, size, size);
   }
 
+  @Override
   public boolean contains(Point p) {
     if(p != null) {
       return super.contains(p);
