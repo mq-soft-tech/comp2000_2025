@@ -1,11 +1,16 @@
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.*;
 
 public class Stage {
   Grid grid;
   Actor cat;
   Actor dog;
   Actor bird;
+  ArrayList<Actor> actors = new ArrayList<Actor>();
+  actors.add(cat);
+  actors.add(dog);
+  actors.add(bird);
 
   public Stage() {
     grid = new Grid();
