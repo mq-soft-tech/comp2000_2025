@@ -4,9 +4,9 @@ import java.util.*;
 
 public class Stage {
   Grid grid;
-  static Actor cat;
-  static Actor dog;
-  static Actor bird;
+  Actor cat;
+  Actor dog;
+  Actor bird;
  
 
   public Stage() {
@@ -20,10 +20,10 @@ public class Stage {
   public void paint(Graphics g, Point mouseLoc) {
     grid.paint(g, mouseLoc);
     ArrayList<Actor> actors = new ArrayList<Actor>();
-    actors.add(cat);
-    actors.add(dog);
-    actors.add(bird);
-  for (int i=0; i<=actors.size(); i++){
+    actors.add(0, cat);
+    actors.add(1, dog);
+    actors.add(2, bird);
+  for (int i=0; i<actors.size(); i++){
     actors.get(i).paint(g);
   }
   } 
