@@ -3,10 +3,15 @@ import java.awt.Polygon;
 import java.util.ArrayList;
 
 public class Bird extends Actor {
-  public Bird(Cell inLoc) {
-    loc = inLoc;
+  public Bird(Cell inLoc, Grid gameGrid) {
+    super(inLoc, gameGrid);
     color = Color.GREEN;
     display = new ArrayList<Polygon>();
+    updatePolygons();
+  }
+
+  protected void updatePolygons() {
+    display.clear();
     Polygon wing1 = new Polygon();
     wing1.addPoint(loc.x + 5, loc.y + 5);
     wing1.addPoint(loc.x + 15, loc.y + 17);

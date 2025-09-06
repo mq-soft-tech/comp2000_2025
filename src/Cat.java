@@ -3,10 +3,15 @@ import java.awt.Polygon;
 import java.util.ArrayList;
 
 public class Cat extends Actor {
-  public Cat(Cell inLoc) {
-    loc = inLoc;
+  public Cat(Cell inLoc, Grid gameGrid) {
+    super(inLoc, gameGrid);
     color = Color.BLUE;
     display = new ArrayList<Polygon>();
+    updatePolygons();
+  }
+
+  protected void updatePolygons() {
+    display.clear();
     Polygon ear1 = new Polygon();
     ear1.addPoint(loc.x + 11, loc.y + 5);
     ear1.addPoint(loc.x + 15, loc.y + 15);

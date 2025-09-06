@@ -3,10 +3,15 @@ import java.awt.Polygon;
 import java.util.ArrayList;
 
 public class Dog extends Actor {
-  public Dog(Cell inLoc) {
-    loc = inLoc;
+  public Dog(Cell inLoc, Grid gameGrid) {
+    super(inLoc, gameGrid);
     color = Color.YELLOW;
     display = new ArrayList<Polygon>();
+    updatePolygons();
+  }
+
+  protected void updatePolygons() {
+    display.clear();
     Polygon ear1 = new Polygon();
     ear1.addPoint(loc.x + 5, loc.y + 5);
     ear1.addPoint(loc.x + 15, loc.y + 5);
