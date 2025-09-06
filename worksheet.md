@@ -69,3 +69,92 @@ Is there a place that you could put all the common parts?
 ### Task 9
 
 Draw a picture of the inheritance hierarchy you have created.  You should (loosely) use [UML notation](http://umich.edu/~eecs381/handouts/UMLNotationSummary.pdf) for your diagram.  You are using UML In this case, and all through this course, only for "a rough sketch of an idea".
+
+## Week 5 Application Exercise
+
+Your team's task this week is to find the _most sensible and useful way to incorporate generics_ into the program you have at this point.  It will be worth making sure your team's code is all up to date so you have the most to work with.  You can take any approach you want and use the generics for any task you want.  Keep in mind what generics are good at in your considerations because we will be asking ourselves which teams had the most useful generics.
+
+We have provided a possible sensible path via Tasks 10, 11, and 12 if your team wants some direction to head in.
+
+### Task 10
+
+Did you notice the repetition in the stage paint method?  All three actors have the `paint` method called on them.  In fact, we might later want to have dozens of actors on the stage at any one time, we don't want dozens of calls to `someone.paint(g);`.  What we need is a collection to store all the actors, something like an array that we can put them all in.  Then we can just loop over that array and call  `paint` on every element.  _I think_ we should use an `ArrayList` (https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html).  Notice it is a generic collection?  You will need to use generics to make this work.  Put all the actors in a single array list called `actors` and then loop over this list to paint them.  Once you have done that you might like to add more actors to the stage.
+
+🤔 In my solution, I will declare the actors list as a `List` instead of an `ArrayList`.  Any idea why?  Why does this even work?
+
+### Task 11
+
+Turns out you are not able to use colours to distinguish the different types of actors!  You are going to need to draw little shapes to represent them.  You have been told you can't use images, you have to draw with Java2D primitives so the game can scale up and down as required.  The `Graphics` objects we are painting on know how to draw `Polygon`s (https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Polygon.html) so that is what we are going to use.  However, one polygon is not enough for each actor, we need each to be made of a list of polygons.  We will use `ArrayList` again!  Have the `Color` field of `Actor` changed to a list of polygons and initialise each subclass to an appropriate set of polygons.  You might find the following polygons a useful starting point where `location` is the top-left point of the actor (but I am sure you can do better as well - share your designs on the forums!):
+
+#### Cat
+
+~~~~~
+    Polygon ear1 = new Polygon();
+    ear1.addPoint(loc.x + 11, loc.y + 5);
+    ear1.addPoint(loc.x + 15, loc.y + 15);
+    ear1.addPoint(loc.x + 7, loc.y + 15);
+    Polygon ear2 = new Polygon();
+    ear2.addPoint(loc.x + 22, loc.y + 5);
+    ear2.addPoint(loc.x + 26, loc.y + 15);
+    ear2.addPoint(loc.x + 18, loc.y + 15);
+    Polygon face = new Polygon();
+    face.addPoint(loc.x + 5, loc.y + 15);
+    face.addPoint(loc.x + 29, loc.y + 15);
+    face.addPoint(loc.x + 17, loc.y + 30);
+~~~~~
+
+#### Dog
+
+~~~~~
+    Polygon ear1 = new Polygon();
+    ear1.addPoint(loc.x + 5, loc.y + 5);
+    ear1.addPoint(loc.x + 15, loc.y + 5);
+    ear1.addPoint(loc.x + 5, loc.y + 15);
+    Polygon ear2 = new Polygon();
+    ear2.addPoint(loc.x + 20, loc.y + 5);
+    ear2.addPoint(loc.x + 30, loc.y + 5);
+    ear2.addPoint(loc.x + 30, loc.y + 15);
+    Polygon face = new Polygon();
+    face.addPoint(loc.x + 8, loc.y + 7);
+    face.addPoint(loc.x + 27, loc.y + 7);
+    face.addPoint(loc.x + 27, loc.y + 25);
+    face.addPoint(loc.x + 8, loc.y + 25);
+~~~~~
+
+#### Bird
+
+~~~~~
+    Polygon wing1 = new Polygon();
+    wing1.addPoint(loc.x + 5, loc.y + 5);
+    wing1.addPoint(loc.x + 15, loc.y + 17);
+    wing1.addPoint(loc.x + 5, loc.y + 17);
+    Polygon wing2 = new Polygon();
+    wing2.addPoint(loc.x + 30, loc.y + 5);
+    wing2.addPoint(loc.x + 20, loc.y + 17);
+    wing2.addPoint(loc.x + 30, loc.y + 17);
+    Polygon body = new Polygon();
+    body.addPoint(loc.x + 15, loc.y + 10);
+    body.addPoint(loc.x + 20, loc.y + 10);
+    body.addPoint(loc.x + 20, loc.y + 25);
+    body.addPoint(loc.x + 15, loc.y + 25);
+~~~~~
+
+### Task 12
+
+In this task we will add a method to the grid class that returns whatever cell is under a particular location.
+
+Such a method needs to take in a `Point` and return back a `Cell`.  It will do a simple calculation to turn the x and y coordinates into the right array indices and look them up.
+
+However, there are some areas on our stage where there are no cells, not to mention what to do when a `null` point is passed in!
+
+So, we need a method that _might_ return a `Cell`.  What should it do when it can't find a cell?  Return `null`?  Definitely not!!!!  You are just asking for a asking for null-pointer exception if you do that.  Instead, we will use the `Optional` generic container (https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html).  
+
+Add the following method to `Grid` that will return whatever cell is located around the point that is passed in.
+
+~~~~~
+public Optional<Cell> cellAtPoint(Point p)
+~~~~~
+
+🤔 How about we improve the `cellAtColRow` method now we know about optional containers?
+
+🤔 Now that we have `cellAtPoint`, lets use it.  Grow the app window to 1024x720 so we have some clear space to the right of the grid.  In this space, put the details of whatever cell we are hoving over.  For example, you might put the type of cell that is located there, and what it's elevation is.  There are many ways to do this, but one good way is to call `cellAtPoint` while painting the stage and use the resulting cell information.
