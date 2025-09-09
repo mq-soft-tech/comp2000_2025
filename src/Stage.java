@@ -34,8 +34,59 @@ public class Stage {
     for(Actor a : actors) {
       if(a instanceof Dog) {
         a.move(direction);
+        moveEnemiesRandomly();
         break;
       }
     }
+  }
+
+  private void moveEnemiesRandomly() {
+    for(Actor a : actors) {
+      if(a instanceof Dog) continue;
+      int steps = 1 + (int)(Math.random() * 3);
+      Direction dir = randomDirection();
+      for(int s=0; s<steps; s++) {
+        int colIndex = a.loc.col - 'A';
+        int rowIndex = a.loc.row;
+        int nextCol = colIndex;
+        int nextRow = rowIndex;
+        switch(dir) {
+          case LEFT: nextCol--; break;
+          case RIGHT: nextCol++; break;
+          case UP: nextRow--; break;
+          case DOWN: nextRow++; break;
+        }
+        if(nextCol < 0 || nextCol > 19 || nextRow < 0 || nextRow > 19) {
+          break;
+        }
+        if(!belongsToTerritory(a, nextCol, nextRow)) {
+          break;
+        }
+        Optional<Cell> target = grid.cellAtColRow(nextCol, nextRow);
+        if(target.isPresent()) {
+          a.setLocation(target.get());
+        }
+      }
+    }
+  }
+
+  private Direction randomDirection() {
+    int r = (int)(Math.random() * 4);
+    switch(r) {
+      case 0: return Direction.UP;
+      case 1: return Direction.DOWN;
+      case 2: return Direction.LEFT;
+      default: return Direction.RIGHT;
+    }
+  }
+
+  private boolean belongsToTerritory(Actor a, int col, int row) {
+    if(a instanceof Cat) {
+      return row >= 0 && row <= 6;
+    }
+    if(a instanceof Bird) {
+      return row >= 7 && row <= 13;
+    }
+    return true;
   }
 }

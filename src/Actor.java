@@ -59,4 +59,9 @@ public abstract class Actor implements Movement {
   }
 
   protected abstract void updatePolygons();
+
+  protected void setLocation(Cell newLocation) {
+    loc = newLocation;
+    updatePolygons();
+  }
 }

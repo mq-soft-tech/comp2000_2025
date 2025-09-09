@@ -18,7 +18,13 @@ public class Cell extends Rectangle {
     if(contains(mousePos)) {
       g.setColor(Color.GRAY);
     } else {
-      g.setColor(Color.WHITE);
+      if(row >= 0 && row <= 6) {
+        g.setColor(new Color(200, 220, 255));
+      } else if(row >= 7 && row <= 13) {
+        g.setColor(new Color(200, 240, 200));
+      } else {
+        g.setColor(new Color(250, 240, 180));
+      }
     }
     g.fillRect(x, y, size, size);
     g.setColor(Color.BLACK);
