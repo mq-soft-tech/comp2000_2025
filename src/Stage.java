@@ -29,4 +29,13 @@ public class Stage {
       g.drawString(String.valueOf(hoverCell.col) + String.valueOf(hoverCell.row), 740, 30);
     }
   }
+
+  public void movePlayer(Direction direction) {
+    for(Actor a : actors) {
+      if(a instanceof Dog) {
+        a.move(direction);
+        break;
+      }
+    }
+  }
 }
