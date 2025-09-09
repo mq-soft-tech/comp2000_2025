@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class Stage {
@@ -44,25 +45,14 @@ public class Stage {
     for(Actor a : actors) {
       if(a instanceof Dog) continue;
       int steps = 1 + (int)(Math.random() * 3);
-      Direction dir = randomDirection();
       for(int s=0; s<steps; s++) {
         int colIndex = a.loc.col - 'A';
         int rowIndex = a.loc.row;
-        int nextCol = colIndex;
-        int nextRow = rowIndex;
-        switch(dir) {
-          case LEFT: nextCol--; break;
-          case RIGHT: nextCol++; break;
-          case UP: nextRow--; break;
-          case DOWN: nextRow++; break;
-        }
-        if(nextCol < 0 || nextCol > 19 || nextRow < 0 || nextRow > 19) {
-          break;
-        }
-        if(!belongsToTerritory(a, nextCol, nextRow)) {
-          break;
-        }
-        Optional<Cell> target = grid.cellAtColRow(nextCol, nextRow);
+        List<Direction> allowed = allowedDirections(a, colIndex, rowIndex);
+        if(allowed.isEmpty()) break;
+        Direction dir = allowed.get((int)(Math.random() * allowed.size()));
+        int[] next = applyDirection(colIndex, rowIndex, dir);
+        Optional<Cell> target = grid.cellAtColRow(next[0], next[1]);
         if(target.isPresent()) {
           a.setLocation(target.get());
         }
@@ -70,14 +60,30 @@ public class Stage {
     }
   }
 
-  private Direction randomDirection() {
-    int r = (int)(Math.random() * 4);
-    switch(r) {
-      case 0: return Direction.UP;
-      case 1: return Direction.DOWN;
-      case 2: return Direction.LEFT;
-      default: return Direction.RIGHT;
+  private List<Direction> allowedDirections(Actor a, int col, int row) {
+    List<Direction> dirs = new ArrayList<Direction>(Arrays.asList(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
+    List<Direction> allowed = new ArrayList<Direction>();
+    for(Direction d : dirs) {
+      int[] next = applyDirection(col, row, d);
+      int nc = next[0];
+      int nr = next[1];
+      if(nc < 0 || nc > 19 || nr < 0 || nr > 19) continue;
+      if(!belongsToTerritory(a, nc, nr)) continue;
+      allowed.add(d);
     }
+    return allowed;
+  }
+
+  private int[] applyDirection(int col, int row, Direction d) {
+    int nc = col;
+    int nr = row;
+    switch(d) {
+      case LEFT: nc--; break;
+      case RIGHT: nc++; break;
+      case UP: nr--; break;
+      case DOWN: nr++; break;
+    }
+    return new int[] { nc, nr };
   }
 
   private boolean belongsToTerritory(Actor a, int col, int row) {
