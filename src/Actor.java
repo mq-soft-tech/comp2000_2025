@@ -2,12 +2,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
-import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Actor {
   Color color;
   Cell loc;
-  List<Polygon> display;
+  ArrayList<Polygon> display = new ArrayList<Polygon>();
 
   public void paint(Graphics g) {
    for(Polygon p: display) {

@@ -2,12 +2,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 import java.util.Optional;
 
 public class Stage {
   Grid grid;
-  List<Actor> actors;
+  ArrayList<Actor> actors;
 
   public Stage() {
     grid = new Grid();
