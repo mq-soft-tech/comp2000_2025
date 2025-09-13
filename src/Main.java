@@ -13,7 +13,7 @@ public class Main extends JFrame {
     class Canvas extends JPanel {
       Stage stage = new Stage();
       public Canvas() {
-        setPreferredSize(new Dimension(720, 720));
+        setPreferredSize(new Dimension(1024, 720));
       }
 
       @Override

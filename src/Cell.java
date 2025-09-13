@@ -5,6 +5,8 @@ import java.awt.Rectangle;
 
 public class Cell extends Rectangle {
   static int size = 35;
+  public char[] col;
+  public char[] row;
 
   public Cell(int x, int y) {
     super(x, y, size, size);

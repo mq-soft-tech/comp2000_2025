@@ -1,5 +1,4 @@
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 import java.util.*;
 
 public class Stage {
@@ -11,10 +10,10 @@ public class Stage {
 
   public Stage() {
     grid = new Grid();
-    cat = new Cat(grid.cellAtColRow(5, 10));
-    dog = new Dog(grid.cellAtColRow(19, 17));
-    bird = new Bird(grid.cellAtColRow(15, 13));
-    TRex = new TRex(grid.cellAtColRow(2, 7));
+    cat = new Cat(grid.cellAtColRow(5, 10).get());
+    dog = new Dog(grid.cellAtColRow(19, 17).get());
+    bird = new Bird(grid.cellAtColRow(15, 13).get());
+    TRex = new TRex(grid.cellAtColRow(2, 7).get());
   }
 
   public void paint(Graphics g, Point mouseLoc) {
@@ -27,6 +26,12 @@ public class Stage {
   for (int i=0; i<actors.size(); i++){
     actors.get(i).paint(g);
   }
+  Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
+    if(underMouse.isPresent()) {
+      Cell hoverCell = underMouse.get();
+      g.setColor(Color.DARK_GRAY);
+      g.drawString(String.valueOf(hoverCell.col) + String.valueOf(hoverCell.row), 740, 30);
+    }
   } 
 
 }
