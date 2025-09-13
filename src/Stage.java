@@ -1,31 +1,26 @@
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Stage {
   Grid grid;
-  Actor cat;
-  Actor dog;
-  Actor bird;
-  Actor TRex;
+  List<Actor> actors;
 
   public Stage() {
     grid = new Grid();
-    cat = new Cat(grid.cellAtColRow(5, 10).get());
-    dog = new Dog(grid.cellAtColRow(19, 17).get());
-    bird = new Bird(grid.cellAtColRow(15, 13).get());
-    TRex = new TRex(grid.cellAtColRow(2, 7).get());
+    actors = new ArrayList<Actor>();
+    actors = new ArrayList<Actor>();
+    actors.add(new Cat(grid.cellAtColRow(0, 0).get()));
+    actors.add(new Dog(grid.cellAtColRow(0, 15).get()));
+    actors.add(new Bird(grid.cellAtColRow(12, 9).get()));
+    actors.add(new TRex(grid.cellAtColRow(2, 7).get()));
   }
 
   public void paint(Graphics g, Point mouseLoc) {
     grid.paint(g, mouseLoc);
-    ArrayList<Actor> actors = new ArrayList<Actor>();
-    actors.add(0, cat);
-    actors.add(1, dog);
-    actors.add(2, bird);
-    actors.add(3, TRex);
-  for (int i=0; i<actors.size(); i++){
-    actors.get(i).paint(g);
-  }
+   for(Actor a: actors) {
+      a.paint(g);
+    }
   Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
     if(underMouse.isPresent()) {
       Cell hoverCell = underMouse.get();
