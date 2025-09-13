@@ -1,4 +1,5 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Polygon;
 import java.util.ArrayList;
 
 public class Dog extends Actor {

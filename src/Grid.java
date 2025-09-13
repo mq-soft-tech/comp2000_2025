@@ -8,9 +8,17 @@ public class Grid {
   public Grid() {
     for(int i=0; i<cells.length; i++) {
       for(int j=0; j<cells[i].length; j++) {
-        cells[i][j] = new Cell(10+Cell.size*i, 10+Cell.size*j);
+        cells[i][j] = new Cell(colToLabel(i), j);
       }
     }
+  }
+
+  private char colToLabel(int col) {
+    return (char) (col + Character.valueOf('A'));
+  }
+
+  private int labelToCol(char col) {
+    return (int) (col - Character.valueOf('A'));
   }
 
   public void paint(Graphics g, Point mousePos) {
@@ -32,10 +40,6 @@ public class Grid {
     return cellAtColRow(labelToCol(c), r);
   }
 
-   private int labelToCol(char c) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'labelToCol'");
-  }
 
    public Optional<Cell> cellAtPoint(Point p) {
     for(int i=0; i < cells.length; i++) {

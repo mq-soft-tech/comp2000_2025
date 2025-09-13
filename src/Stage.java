@@ -1,6 +1,9 @@
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Stage {
   Grid grid;
@@ -8,7 +11,6 @@ public class Stage {
 
   public Stage() {
     grid = new Grid();
-    actors = new ArrayList<Actor>();
     actors = new ArrayList<Actor>();
     actors.add(new Cat(grid.cellAtColRow(0, 0).get()));
     actors.add(new Dog(grid.cellAtColRow(0, 15).get()));

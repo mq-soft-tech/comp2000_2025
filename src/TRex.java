@@ -1,5 +1,6 @@
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Polygon;
+import java.util.ArrayList;
 
 public class TRex extends Actor {
   public TRex(Cell inLoc) {
