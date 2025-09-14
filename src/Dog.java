@@ -6,7 +6,7 @@ public class Dog extends Actor {
   public Dog(Cell inLoc) {
     loc = inLoc;
     color = Color.YELLOW;
-    ArrayList<Polygon> display = new ArrayList<Polygon>();
+    display = new ArrayList<Polygon>();
     Polygon ear1 = new Polygon();
     ear1.addPoint(loc.x + 5, loc.y + 5);
     ear1.addPoint(loc.x + 15, loc.y + 5);

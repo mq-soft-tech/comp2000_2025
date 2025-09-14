@@ -5,7 +5,7 @@ public class Bird extends Actor {
   public Bird(Cell inLoc) {
     loc = inLoc;
     color = Color.GREEN;
-    ArrayList<Polygon> display = new ArrayList<Polygon>();
+    display = new ArrayList<Polygon>();
     Polygon wing1 = new Polygon();
     wing1.addPoint(loc.x + 5, loc.y + 5);
     wing1.addPoint(loc.x + 15, loc.y + 17);
