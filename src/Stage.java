@@ -22,10 +22,9 @@ public class Stage {
     actors.add(new Fox(grid.cellAtColRow(5, 3).get(), grid));
     actors.add(new Turtle(grid.cellAtColRow(8, 12).get(), grid));
     actors.add(new Rabbit(grid.cellAtColRow(16, 8).get(), grid));
-    // Place a few coins
-    items.add(new Coin(grid.cellAtColRow(9, 18).get()));
-    items.add(new Coin(grid.cellAtColRow(10, 10).get()));
-    items.add(new Coin(grid.cellAtColRow(15, 7).get()));
+    for(int i=0; i<3; i++) {
+      spawnRandomCoin();
+    }
   }
 
   public void paint(Graphics g, Point mouseLoc) {
@@ -48,7 +47,6 @@ public class Stage {
     } else if(state == GameState.LOST) {
       g.drawString("You Lose!", 740, 60);
     }
-    // Draw actor locations
     int y = 100;
     g.drawString("Actors:", 740, y);
     y += 20;
@@ -89,7 +87,6 @@ public class Stage {
         Optional<Cell> target = grid.cellAtColRow(next[0], next[1]);
         if(target.isPresent()) {
           a.setLocation(target.get());
-          // Check collision immediately after move
           if(checkCollisionWithDog()) {
             state = GameState.LOST;
             return;
@@ -143,7 +140,6 @@ public class Stage {
       }
     }
     if(dogCell.isPresent()) {
-      // Win on reaching top row (row 0)
       if(dogCell.get().row == 0) {
         state = GameState.WON;
         return;
@@ -176,13 +172,41 @@ public class Stage {
 
   private void collectItemsAt(Cell cell) {
     List<Item> remaining = new ArrayList<Item>();
+    int collected = 0;
     for(Item it : items) {
       if(it.getCell() == cell) {
         score += 10;
+        collected++;
       } else {
         remaining.add(it);
       }
     }
     items = remaining;
+    for(int i=0; i<collected; i++) {
+      spawnRandomCoin();
+    }
+  }
+
+  private void spawnRandomCoin() {
+    for(int attempts=0; attempts<100; attempts++) {
+      int col = (int)(Math.random() * 20);
+      int row = (int)(Math.random() * 20);
+      if(row == 0) continue;
+      Optional<Cell> cellOpt = grid.cellAtColRow(col, row);
+      if(!cellOpt.isPresent()) continue;
+      Cell target = cellOpt.get();
+      boolean occupiedByItem = false;
+      for(Item it : items) {
+        if(it.getCell() == target) { occupiedByItem = true; break; }
+      }
+      if(occupiedByItem) continue;
+      boolean occupiedByActor = false;
+      for(Actor a : actors) {
+        if(a.loc == target) { occupiedByActor = true; break; }
+      }
+      if(occupiedByActor) continue;
+      items.add(new Coin(target));
+      return;
+    }
   }
 }
