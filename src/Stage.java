@@ -39,6 +39,16 @@ public class Stage {
     } else if(state == GameState.LOST) {
       g.drawString("You Lose!", 740, 60);
     }
+    // Draw actor locations
+    int y = 100;
+    g.drawString("Actors:", 740, y);
+    y += 20;
+    for(Actor a : actors) {
+      String name = a.getClass().getSimpleName();
+      String locStr = String.valueOf(a.loc.col) + String.valueOf(a.loc.row);
+      g.drawString(name + ": " + locStr, 740, y);
+      y += 18;
+    }
   }
 
   public void movePlayer(Direction direction) {
