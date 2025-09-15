@@ -9,6 +9,7 @@ import java.util.Optional;
 public class Stage {
   Grid grid;
   List<Actor> actors;
+  GameState state = GameState.RUNNING;
 
   public Stage() {
     grid = new Grid();
@@ -29,13 +30,21 @@ public class Stage {
       g.setColor(Color.DARK_GRAY);
       g.drawString(String.valueOf(hoverCell.col) + String.valueOf(hoverCell.row), 740, 30);
     }
+    g.setColor(Color.BLACK);
+    if(state == GameState.WON) {
+      g.drawString("You Win!", 740, 60);
+    } else if(state == GameState.LOST) {
+      g.drawString("You Lose!", 740, 60);
+    }
   }
 
   public void movePlayer(Direction direction) {
+    if(state != GameState.RUNNING) return;
     for(Actor a : actors) {
       if(a instanceof Dog) {
         a.move(direction);
         moveEnemiesRandomly();
+        evaluateGameState();
         break;
       }
     }
@@ -94,5 +103,30 @@ public class Stage {
       return row >= 7 && row <= 13;
     }
     return true;
+  }
+
+  private void evaluateGameState() {
+    Optional<Cell> dogCell = Optional.empty();
+    for(Actor a : actors) {
+      if(a instanceof Dog) {
+        dogCell = Optional.of(a.loc);
+      }
+    }
+    if(dogCell.isPresent()) {
+      // Win on reaching top row (row 0)
+      if(dogCell.get().row == 0) {
+        state = GameState.WON;
+        return;
+      }
+      // Lose on collision with cat or bird
+      for(Actor a : actors) {
+        if(!(a instanceof Dog)) {
+          if(a.loc == dogCell.get()) {
+            state = GameState.LOST;
+            return;
+          }
+        }
+      }
+    }
   }
 }
