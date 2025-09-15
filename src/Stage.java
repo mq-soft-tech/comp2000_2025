@@ -10,6 +10,8 @@ public class Stage {
   Grid grid;
   List<Actor> actors;
   GameState state = GameState.RUNNING;
+  List<Item> items = new ArrayList<Item>();
+  int score = 0;
 
   public Stage() {
     grid = new Grid();
@@ -20,10 +22,17 @@ public class Stage {
     actors.add(new Fox(grid.cellAtColRow(5, 3).get(), grid));
     actors.add(new Turtle(grid.cellAtColRow(8, 12).get(), grid));
     actors.add(new Rabbit(grid.cellAtColRow(16, 8).get(), grid));
+    // Place a few coins
+    items.add(new Coin(grid.cellAtColRow(9, 18).get()));
+    items.add(new Coin(grid.cellAtColRow(10, 10).get()));
+    items.add(new Coin(grid.cellAtColRow(15, 7).get()));
   }
 
   public void paint(Graphics g, Point mouseLoc) {
     grid.paint(g, mouseLoc);
+    for(Item it : items) {
+      it.paint(g);
+    }
     for(Actor a: actors) {
       a.paint(g);
     }
@@ -49,6 +58,8 @@ public class Stage {
       g.drawString(name + ": " + locStr, 740, y);
       y += 18;
     }
+    y += 10;
+    g.drawString("Score: " + score, 740, y);
   }
 
   public void movePlayer(Direction direction) {
@@ -58,6 +69,7 @@ public class Stage {
         a.move(direction);
         moveEnemiesRandomly();
         evaluateGameState();
+        collectItemsAt(a.loc);
         break;
       }
     }
@@ -160,5 +172,17 @@ public class Stage {
       }
     }
     return false;
+  }
+
+  private void collectItemsAt(Cell cell) {
+    List<Item> remaining = new ArrayList<Item>();
+    for(Item it : items) {
+      if(it.getCell() == cell) {
+        score += 10;
+      } else {
+        remaining.add(it);
+      }
+    }
+    items = remaining;
   }
 }
