@@ -17,6 +17,9 @@ public class Stage {
     actors.add(new Cat(grid.cellAtColRow(0, 0).get(), grid));
     actors.add(new Dog(grid.cellAtColRow(10, 19).get(), grid));
     actors.add(new Bird(grid.cellAtColRow(12, 9).get(), grid));
+    actors.add(new Fox(grid.cellAtColRow(5, 3).get(), grid));
+    actors.add(new Turtle(grid.cellAtColRow(8, 12).get(), grid));
+    actors.add(new Rabbit(grid.cellAtColRow(16, 8).get(), grid));
   }
 
   public void paint(Graphics g, Point mouseLoc) {
