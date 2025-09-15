@@ -15,7 +15,7 @@ public class Stage {
     grid = new Grid();
     actors = new ArrayList<Actor>();
     actors.add(new Cat(grid.cellAtColRow(0, 0).get(), grid));
-    actors.add(new Dog(grid.cellAtColRow(0, 15).get(), grid));
+    actors.add(new Dog(grid.cellAtColRow(10, 19).get(), grid));
     actors.add(new Bird(grid.cellAtColRow(12, 9).get(), grid));
   }
 
@@ -64,6 +64,11 @@ public class Stage {
         Optional<Cell> target = grid.cellAtColRow(next[0], next[1]);
         if(target.isPresent()) {
           a.setLocation(target.get());
+          // Check collision immediately after move
+          if(checkCollisionWithDog()) {
+            state = GameState.LOST;
+            return;
+          }
         }
       }
     }
@@ -118,15 +123,29 @@ public class Stage {
         state = GameState.WON;
         return;
       }
-      // Lose on collision with cat or bird
-      for(Actor a : actors) {
-        if(!(a instanceof Dog)) {
-          if(a.loc == dogCell.get()) {
-            state = GameState.LOST;
-            return;
-          }
+      if(checkCollisionWithDog()) {
+        state = GameState.LOST;
+        return;
+      }
+    }
+  }
+
+  private boolean checkCollisionWithDog() {
+    Cell dogCell = null;
+    for(Actor a : actors) {
+      if(a instanceof Dog) {
+        dogCell = a.loc;
+        break;
+      }
+    }
+    if(dogCell == null) return false;
+    for(Actor a : actors) {
+      if(!(a instanceof Dog)) {
+        if(a.loc == dogCell) {
+          return true;
         }
       }
     }
+    return false;
   }
 }
