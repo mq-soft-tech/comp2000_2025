@@ -123,6 +123,9 @@ public class Stage {
   }
 
   private boolean belongsToTerritory(Actor a, int col, int row) {
+    if(!(a instanceof Dog)) {
+      if(row >= 14) return false;
+    }
     if(a instanceof Cat) {
       return row >= 0 && row <= 6;
     }
@@ -192,6 +195,7 @@ public class Stage {
       int col = (int)(Math.random() * 20);
       int row = (int)(Math.random() * 20);
       if(row == 0) continue;
+      if(row >= 14) continue;
       Optional<Cell> cellOpt = grid.cellAtColRow(col, row);
       if(!cellOpt.isPresent()) continue;
       Cell target = cellOpt.get();
