@@ -8,6 +8,7 @@ import java.util.Optional;
 public class Stage {
   Grid grid;
   List<Actor> actors;
+  private Warrior warrior;
 
   public Stage() {
     grid = new Grid();
@@ -15,7 +16,13 @@ public class Stage {
     actors.add(new Cat(grid.cellAtColRow(0, 0).get()));
     actors.add(new Dog(grid.cellAtColRow(0, 15).get()));
     actors.add(new Bird(grid.cellAtColRow(12, 9).get()));    
-    actors.add(new Warrior(grid.cellAtColRow(0, 8).get()));  
+    warrior = new Warrior(grid, grid.cellAtColRow(0, 8).get());  
+
+    actors.add(warrior); 
+  }
+
+  public void moveWarrior(int dc, int dr) {
+    warrior.moveBy(dc, dr);
   }
 
   public void paint(Graphics g, Point mouseLoc) {
