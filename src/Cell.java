@@ -16,12 +16,12 @@ public class Cell extends Rectangle {
 
   public void paint(Graphics g, Point mousePos) {
     if(contains(mousePos)) {
-      g.setColor(Color.GRAY);
-    } else {
       g.setColor(Color.WHITE);
+    } else {
+      g.setColor(Color.BLACK);
     }
     g.fillRect(x, y, size, size);
-    g.setColor(Color.BLACK);
+    g.setColor(Color.ORANGE);
     g.drawRect(x, y, size, size);
   }
 

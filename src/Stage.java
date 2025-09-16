@@ -25,7 +25,7 @@ public class Stage {
     Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
     if(underMouse.isPresent()) {
       Cell hoverCell = underMouse.get();
-      g.setColor(Color.DARK_GRAY);
+      g.setColor(Color.BLACK);
       g.drawString(String.valueOf(hoverCell.col) + String.valueOf(hoverCell.row), 740, 30);
     }
   }
