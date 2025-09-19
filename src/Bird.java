@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Polygon;
 import java.util.ArrayList;
 
-public class Bird extends Actor {
+public class Bird extends Actor implements Flier{
   public Bird(Cell inLoc) {
     loc = inLoc;
     color = Color.GREEN;

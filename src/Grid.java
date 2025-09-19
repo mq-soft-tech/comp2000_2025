@@ -8,7 +8,7 @@ public class Grid {
   public Grid() {
     for(int i=0; i<cells.length; i++) {
       for(int j=0; j<cells[i].length; j++) {
-        cells[i][j] = new Cell(colToLabel(i), j, 10+Cell.size*i, 10+Cell.size*j);
+        cells[i][j] = new TerrainCell(colToLabel(i), j, 10+Cell.size*i, 10+Cell.size*j, randomTerrain());
       }
     }
   }
@@ -50,5 +50,12 @@ public class Grid {
       }
     }
     return Optional.empty();
+  }
+  private Terrain randomTerrain() {
+    double r = Math.random();
+    if (r < 0.1) return Terrain.WATER;
+    if (r < 0.2) return Terrain.MOUNTAIN;
+    if (r < 0.4) return Terrain.SAND;
+    return Terrain.GRASS;
   }
 }

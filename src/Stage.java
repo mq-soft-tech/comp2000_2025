@@ -21,6 +21,16 @@ public class Stage {
     grid.paint(g, mouseLoc);
     for(Actor a: actors) {
       a.paint(g);
+      Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
+      if (underMouse.isPresent()) {
+        Cell hoverCell = underMouse.get();
+        g.setColor(Color.DARK_GRAY);
+        g.drawString(String.valueOf(hoverCell.col) + String.valueOf(hoverCell.row), 740, 30);
+        if (hoverCell instanceof TerrainCell) {
+          Terrain t = ((TerrainCell) hoverCell).getTerrian();
+          g.drawString("Terrain: " + t.name(), 740, 45);
+        }
+      }
     }
     Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
     if(underMouse.isPresent()) {
