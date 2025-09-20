@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+
 public class Stage {
   Grid grid;
   List<Actor> actors;
   private Warrior warrior;
+
+  private List<Collectible> collectibles = new ArrayList<>();
+
 
 private static final String[][] layout = {
 /*1*/  {"b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b"},
@@ -39,17 +44,48 @@ private static final String[][] layout = {
     actors = new ArrayList<Actor>();
     warrior = new Warrior(grid, grid.cellAtColRow(0,8).get());
     actors.add(warrior); 
+    collectibles.add(new Coin(16, 5));
+    collectibles.add(new Coin(3, 2));
+    collectibles.add(new Coin(12, 13));
+    collectibles.add(new Coin(9, 17));
+    collectibles.add(new Coin(1, 14));
+
   }
 
   public void moveWarrior(int dc, int dr) {
     warrior.moveBy(dc, dr);
+
+    for (int i = 0; i < collectibles.size(); i++) {
+      Collectible c = collectibles.get(i);
+      if (c.getCol() == warrior.getCol() && c.getRow() == warrior.getRow()) {
+        c.collect(warrior);
+        collectibles.remove(i);
+        break;
+      }
+    }
   }
 
   public void paint(Graphics g, Point mouseLoc) {
     grid.paint(g, mouseLoc);
+    for (Collectible c : collectibles) {
+      c.paint(g);
+    }
     for(Actor a: actors) {
       a.paint(g);
     }
+
+    Cell exitCell = grid.cellAtColRow(19, 17).get();
+    g.setColor(Color.BLACK);
+    int size = Cell.size;
+    int cx = exitCell.x;
+    int cy = exitCell.y;
+    g.drawLine(cx, cy, cx + size, cy + size);
+    g.drawLine(cx + size, cy, cx, cy + size);
+
+    int coins = warrior.getCoins();
+    g.setColor(Color.ORANGE);
+    g.drawString("Coins: " + coins, 20, 40);
+
     Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
     if(underMouse.isPresent()) {
       Cell hoverCell = underMouse.get();

@@ -7,12 +7,13 @@ public class Warrior extends Actor {
   private final Grid grid;
   private final Cell spawn;
 
+  private int coins = 0;
+
   public Warrior(Grid grid, Cell inLoc){
     this.grid = grid;
     this.loc = inLoc;
     this.spawn = inLoc;
     this.color = Color.MAGENTA;
-
     buildPolygons();
   }
   
@@ -23,17 +24,18 @@ public class Warrior extends Actor {
     int newR = currR + mr;
 
     grid.cellAtColRow(newC, newR)
-    .filter(cell -> ((Passable)cell).isPassableBy(this))
-    .ifPresent(cell ->{
+    .filter(cell -> ((Passable) cell).isPassableBy(this))
+    .ifPresent(cell -> {
       this.loc = cell;
       buildPolygons();
-      if(cell instanceof LavaCell){
+
+      if (cell instanceof LavaCell) {
         this.loc = spawn;
         buildPolygons();
         return;
       }
-      if(cell instanceof WaterCell){
-        grid.randomFloor().ifPresent(rand ->{
+      if (cell instanceof WaterCell) {
+        grid.randomFloor().ifPresent(rand -> {
           this.loc = rand;
           buildPolygons();
         });
@@ -41,7 +43,18 @@ public class Warrior extends Actor {
     });
   }       
 
-  
+  public void addCoins(int n){
+    coins+= n;
+  }
+  public int getCoins(){
+    return coins;
+  }
+  public int getCol(){ 
+    return loc.col - 'A'; 
+  }
+  public int getRow(){ 
+    return loc.row; 
+  }
 
  
   private void buildPolygons(){
