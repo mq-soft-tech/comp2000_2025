@@ -27,10 +27,20 @@ public Cell cellinbound(char col, int row){
   return cells[c][row];
 }
 
+private Cell from(String t, int colIndex, int row){
+  char col = (char)('A' + colIndex);
+  int x = cells[colIndex][row].x;
+  int y = cells[colIndex][row].y;
 
 
-
-
+  return switch (t){
+    case "g", "floor" - > new Floor(col, row, x, y);
+    case "b", "wall" - > new Wall(col, row, x, y);
+    case "bl", "water" - > new Water(col, row, x, y);
+    case "r", "lava" - > new Lava(col, row, x, y);
+    default -> new Floor(col, row, x, y);
+  }
+}
 
   public Grid() {
     for(int i=0; i<cells.length; i++) {
