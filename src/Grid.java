@@ -2,9 +2,26 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Optional;
 
+
+
 public class Grid {
   Cell[][] cells = new Cell[20][20];
   
+private final Random rng = new Random();
+
+
+public Cell randomteleport(){
+  List<Cell> candidates = Arrays.stream(cells)
+    .flatMap(Array::stream)
+    .filter(cell -> cell instanceof Passable && ((Passable) cell).isPassableBy(null))
+    .toList();
+
+    return candidates.isEmpty ? cell[0][0]
+                    : candidates.get(rng.nextInt(candidates.size()));
+}
+
+
+
   public Grid() {
     for(int i=0; i<cells.length; i++) {
       for(int j=0; j<cells[i].length; j++) {
