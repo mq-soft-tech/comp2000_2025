@@ -19,6 +19,10 @@ public class Cell extends java.awt.Rectangle implements Passable {
     return false;
   }
 
+  public boolean isWall(){
+    return false;
+  }
+
  
 
   public Cell(char inCol, int inRow, int x, int y) {
