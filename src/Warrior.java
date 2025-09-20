@@ -2,52 +2,47 @@ import java.awt.Color;
 import java.awt.Polygon;
 import java.util.ArrayList;
 
+
 public class Warrior extends Actor {
-  private Cell startCell;
+  private final Grid grid;
+  private final Cell spawn;
 
-  public void setStartCell(Cell c){
-    this.startCell = c;
+  public Warrior(Grid grid, Cell inLoc){
+    this.grid = grid;
+    this.loc = inLoc;
+    this.spawn = inLoc;
+    this.color = Color.MAGENTA;
   }
   
-  
-  private final Grid grid;   
+  public void moveBy(int mc, int mr){
+    int currC = loc.col - 'A';
+    int currR = loc.row;
+    int newC = currC + mc;
+    int newR = currR + mr;
 
-  public Warrior(Grid grid, Cell inLoc) {
-    this.grid  = grid;
-    this.loc   = inLoc;      
-    this.color = Color.MAGENTA;  
-    rebuildDisplay();        
-  }
-
-  
-  public void moveBy(int mc, int mr) {
-    int newColIndex = (this.loc.col - 'A') + mc;
-    int newRow = this.loc.row + mr;
-    char newCol = (char)('A' + newColIndex);
-
-    Cell dest = grid.cellinbound(newCol, newRow);
-    if(dest == null) return;
-    if(!((Passable)dest).isPassableBy(this)) return;
-
-    this.loc = dest;
-    rebuildPolygons();
-
-    if(dest.isWater()){
-      Cell target = grid.randomteleport();
-      this.loc = target;
-      rebuildPolygons();
-    } else if (dest.isLava()){
-      if(startCell != null){
-        this.loc = startCell;
+    grid.cellAtColRow(newC, newR)
+    .filter(cell -> ((Passable)cell).isPassableBy(this))
+    .ifPresent(cell ->{
+      this.loc = cell;
+      buildPolygons();
+      if(cell instanceof LavaCell){
+        this.loc = spawn;
+        buildPolygons();
+        return;
       }
-    } else {
-      this.loc = grid.cellinbound('A', 0);
-    }
-    rebuildPolygons();
-  }
+      if(cell instanceof WaterCell){
+        grid.randomFloor().ifPresent(rand ->{
+          this.loc = rand;
+          buildPolygons();
+        });
+      }
+    });
+  }       
+
+  
 
  
-  private void rebuildDisplay() {
+  private void buildPolygons(){
     display = new ArrayList<>();
 
     Polygon head = new Polygon();
