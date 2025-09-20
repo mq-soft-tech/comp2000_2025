@@ -1,12 +1,25 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 
-public class Cell extends Rectangle {
+public class Cell extends java.awt.Rectangle implements Passable {
   static int size = 35;
   char col;
   int row;
+
+  public boolean isWater(){
+    return false;
+  }
+
+  public boolean isLava(){
+    return false;
+  }
+
+  public boolean isFloor(){
+    return false;
+  }
+
+ 
 
   public Cell(char inCol, int inRow, int x, int y) {
     super(x, y, size, size);
