@@ -72,7 +72,7 @@ public void buildGroundFromToken(String[][]map){
   if(rows > 8) makeFloor(0, 8);
  }
 
-private CellGen<? extends Cell> factoryFor(String token){
+private CellFactory<? extends Cell> factoryFor(String token){
   switch (token){
     case "g": return FloorCell::new;
     case "r": return LavaCell::new;
@@ -82,7 +82,7 @@ private CellGen<? extends Cell> factoryFor(String token){
   }
 }
 
-private void setAs(int c, int r, CellGen<? extends Cell> f){
+private void setAs(int c, int r, CellFactory<? extends Cell> f){
   Cell cur = cells[c][r];
   cells[c][r] = f.create(cur.col, cur.row, cur.x, cur.y);
 }

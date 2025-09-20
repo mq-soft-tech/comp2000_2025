@@ -12,6 +12,8 @@ public class Warrior extends Actor {
     this.loc = inLoc;
     this.spawn = inLoc;
     this.color = Color.MAGENTA;
+
+    buildPolygons();
   }
   
   public void moveBy(int mc, int mr){
