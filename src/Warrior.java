@@ -9,7 +9,7 @@ public class Warrior extends Actor {
   public Warrior(Grid grid, Cell inLoc) {
     this.grid  = grid;
     this.loc   = inLoc;      
-    this.color = Color.RED;  
+    this.color = Color.MAGENTA;  
     rebuildDisplay();        
   }
 
