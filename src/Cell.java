@@ -16,9 +16,9 @@ public class Cell extends Rectangle {
 
   public void paint(Graphics g, Point mousePos) {
     if(contains(mousePos)) {
-      g.setColor(Color.WHITE);
-    } else {
       g.setColor(Color.BLACK);
+    } else {
+      g.setColor(Color.WHITE);
     }
     g.fillRect(x, y, size, size);
     g.setColor(Color.BLACK);
