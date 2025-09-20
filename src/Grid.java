@@ -27,6 +27,11 @@ public Cell cellinbound(char col, int row){
   return cells[c][row];
 }
 
+
+
+
+
+
   public Grid() {
     for(int i=0; i<cells.length; i++) {
       for(int j=0; j<cells[i].length; j++) {
@@ -34,6 +39,35 @@ public Cell cellinbound(char col, int row){
       }
     }
   }
+  buildGround;
+
+
+
+  private <T entends Cell> T copyAs(Cell s, CellGen<T> f){
+    return f.create(s.col, s.row, s.x, s.y,);
+  }
+  
+private static boolean isBorder(int c, int r, int w, int h){
+  return c == || r == 0 || c == w - 1 || r == h - 1;
+}
+
+private CellGen<? extends Cell> randomfloor(){
+  int roll = rng.nextInt(100);
+  return (roll < 10) ? Water::new
+      : (roll < 10) ? Lava :: new
+      : Floor: new;
+}
+
+public void buildGround(){
+  int w - cells.length, h = cells[0].length;
+  for (int c = 0; c < w; c++){
+    for(int r = 0; r < h; r++){
+      CellGen<? extends Cell> f =
+        isBorder(c, r, w, h) ? Wall :: new : randomfloor();
+        cells[c][r] = copyAs(cells[c][r], f);
+    }
+  }
+}
 
   private char colToLabel(int col) {
     return (char) (col + Character.valueOf('A'));
