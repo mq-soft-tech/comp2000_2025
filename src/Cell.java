@@ -21,7 +21,7 @@ public class Cell extends Rectangle {
       g.setColor(Color.BLACK);
     }
     g.fillRect(x, y, size, size);
-    g.setColor(Color.ORANGE);
+    g.setColor(Color.BLACK);
     g.drawRect(x, y, size, size);
   }
 
