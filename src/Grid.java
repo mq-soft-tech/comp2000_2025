@@ -20,7 +20,12 @@ public Cell randomteleport(){
                     : candidates.get(rng.nextInt(candidates.size()));
 }
 
-
+public Cell cellinbound(char col, int row){
+  int c = col - 'A';
+  if(c < 0 || c>= cells.length) return null;
+  if(row < 0|| row >= cells[0].length) return null;
+  return cells[c][row];
+}
 
   public Grid() {
     for(int i=0; i<cells.length; i++) {
