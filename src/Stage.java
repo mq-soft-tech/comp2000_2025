@@ -27,7 +27,7 @@ public class Stage {
         g.setColor(Color.DARK_GRAY);
         g.drawString(String.valueOf(hoverCell.col) + String.valueOf(hoverCell.row), 740, 30);
         if (hoverCell instanceof TerrainCell) {
-          Terrain t = ((TerrainCell) hoverCell).getTerrian();
+          Terrain t = ((TerrainCell) hoverCell).getTerrain();
           g.drawString("Terrain: " + t.name(), 740, 45);
         }
       }

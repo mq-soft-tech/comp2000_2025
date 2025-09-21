@@ -32,4 +32,7 @@ public class Cell extends Rectangle {
       return false;
     }
   }
+  public int colIndex() { return col - 'A'; }
+  public int rowIndex() { return row; }
+  
 }
