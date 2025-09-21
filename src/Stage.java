@@ -12,9 +12,9 @@ public class Stage {
   public Stage() {
     grid = new Grid();
     actors = new ArrayList<Actor>();
-    actors.add(new Cat(grid.cellAtColRow(0, 0).get()));
-    actors.add(new Dog(grid.cellAtColRow(0, 15).get()));
-    actors.add(new Bird(grid.cellAtColRow(12, 9).get()));    
+    actors.add(new FirePokemon(grid.cellAtColRow(0, 0).get()));
+    actors.add(new WaterPokemon(grid.cellAtColRow(0, 15).get()));
+    actors.add(new GrassPokemon(grid.cellAtColRow(12, 9).get()));    
   }
 
   public void paint(Graphics g, Point mouseLoc) {
@@ -22,11 +22,20 @@ public class Stage {
     for(Actor a: actors) {
       a.paint(g);
     }
+    
     Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
     if(underMouse.isPresent()) {
       Cell hoverCell = underMouse.get();
       g.setColor(Color.DARK_GRAY);
       g.drawString(String.valueOf(hoverCell.col) + String.valueOf(hoverCell.row), 740, 30);
+
+      for(Actor a: actors){
+        if(a instanceof Pokemon && a.loc == hoverCell){
+          Pokemon p = (Pokemon)a;
+          g.drawString(p.getName() + " (" + p.getType() + "), HP: " + p.getHp(), 740, 50);
+        }
+      }
     }
+    
   }
 }

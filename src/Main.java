@@ -73,6 +73,6 @@ public class Main extends JFrame {
       timer.start();
 
     }
-    private void run() { // 
+    private void run() { // Called on Swing thread after construction
     }
 }
