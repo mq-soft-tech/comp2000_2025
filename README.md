@@ -1,4 +1,4 @@
-Assignment 1 – Grid Game with Inheritance
+Assignment 1 
 **Overview**
 
 The grid exercise from Week 5 is expanded upon in this project.  I created a small grid-based game in which the player must navigate from the upper-left corner to the lower-right corner.  Every time the program runs, a new grid with three distinct terrain types, grass, sand, and water, is created at random.  Every form of terrain has its unique behaviour and is implemented as a subclass of Cell.  The W, A, S, and D keys allow the player to travel across the grid.  Sand and grass allow for walking, but water prevents it.  Since both the start and finish cells are set to Grass, the ultimate goal is always assured to be achievable.
