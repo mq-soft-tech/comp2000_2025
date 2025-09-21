@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -31,13 +30,5 @@ public class Cell extends Rectangle {
   
   public CellType getCellType() {
     return cellType;
-  }
-  
-  public int getMovementCost() {
-    return cellType.getMovementCost();
-  }
-  
-  public boolean canSupportLife() {
-    return cellType.canSupportLife();
   }
 }

@@ -5,40 +5,25 @@ import java.util.Random;
 
 public class Grid {
   Cell[][] cells = new Cell[20][20];
-  private Random random = new Random(42); // Fixed seed for reproducible terrain
+  private Random random = new Random();
   
   public Grid() {
     for(int i=0; i<cells.length; i++) {
       for(int j=0; j<cells[i].length; j++) {
-        CellType cellType = generateCellType(i, j);
+        CellType cellType = generateCellType();
         cells[i][j] = new Cell(colToLabel(i), j, 10+Cell.size*i, 10+Cell.size*j, cellType);
       }
     }
   }
   
-  private CellType generateCellType(int col, int row) {
-    // Create a varied terrain pattern
-    double distanceFromCenter = Math.sqrt(Math.pow(col - 10, 2) + Math.pow(row - 10, 2));
-    double noise = random.nextDouble();
-    
-    if (distanceFromCenter < 3) {
-      return new RockCell(); // Center is rocky
-    } else if (distanceFromCenter < 8) {
-      if (noise < 0.3) {
-        return new WaterCell();
-      } else if (noise < 0.6) {
-        return new SandCell();
-      } else {
-        return new GrassCell();
-      }
-    } else {
-      if (noise < 0.2) {
-        return new WaterCell();
-      } else if (noise < 0.4) {
-        return new SandCell();
-      } else {
-        return new GrassCell();
-      }
+  private CellType generateCellType() {
+    int type = random.nextInt(4);
+    switch (type) {
+      case 0: return new GrassCell();
+      case 1: return new WaterCell();
+      case 2: return new SandCell();
+      case 3: return new RockCell();
+      default: return new GrassCell();
     }
   }
 

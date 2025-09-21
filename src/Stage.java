@@ -9,7 +9,7 @@ import java.util.Random;
 public class Stage {
   Grid grid;
   List<Actor> actors;
-  EcosystemManager ecosystemManager;
+  ItemManager<FoodItem> foodManager;
   private Random random = new Random();
 
   public Stage() {
@@ -18,17 +18,12 @@ public class Stage {
     actors.add(new Cat(grid.cellAtColRow(0, 0).get()));
     actors.add(new Dog(grid.cellAtColRow(0, 15).get()));
     actors.add(new Bird(grid.cellAtColRow(12, 9).get()));
-    
-    // Initialize ecosystem manager
-    ecosystemManager = new EcosystemManager();
-    ecosystemManager.registerManager("Food", new ItemManager<FoodItem>("Food"));
-    
-    // Add some food items to the ecosystem
+    foodManager = new ItemManager<FoodItem>();
     addRandomFoodItems();
   }
   
   private void addRandomFoodItems() {
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 10; i++) {
       Optional<Cell> randomCell = grid.cellAtColRow(random.nextInt(20), random.nextInt(20));
       if (randomCell.isPresent()) {
         Cell cell = randomCell.get();
@@ -38,13 +33,13 @@ public class Stage {
         int itemType = random.nextInt(3);
         switch (itemType) {
           case 0:
-            ecosystemManager.addItem("Food", new Bone(x, y));
+            foodManager.addItem(new Bone(x, y));
             break;
           case 1:
-            ecosystemManager.addItem("Food", new Fish(x, y));
+            foodManager.addItem(new Fish(x, y));
             break;
           case 2:
-            ecosystemManager.addItem("Food", new Seed(x, y));
+            foodManager.addItem(new Seed(x, y));
             break;
         }
       }
@@ -53,45 +48,52 @@ public class Stage {
 
   public void paint(Graphics g, Point mouseLoc) {
     grid.paint(g, mouseLoc);
-    
-    // Paint all items
-    ecosystemManager.paintAll(g);
-    
-    // Paint all actors
+    foodManager.paintAll(g);
     for(Actor a: actors) {
       a.paint(g);
     }
-    
-    // Display information about the cell under the mouse
+    g.setColor(new Color(240, 240, 240));
+    g.fillRect(720, 10, 290, 300);
+    g.setColor(Color.BLACK);
+    g.drawRect(720, 10, 290, 300);
     Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
     if(underMouse.isPresent()) {
       Cell hoverCell = underMouse.get();
-      g.setColor(Color.DARK_GRAY);
-      g.drawString("Cell: " + hoverCell.col + hoverCell.row, 740, 30);
-      g.drawString("Type: " + hoverCell.getCellType().getTypeName(), 740, 50);
-      g.drawString("Movement Cost: " + hoverCell.getMovementCost(), 740, 70);
-      g.drawString("Supports Life: " + hoverCell.canSupportLife(), 740, 90);
-      
-      // Show items at this location
-      List<? extends Item> itemsAtLocation = ecosystemManager.getManager("Food").getItemsAt(mouseLoc);
+      g.setColor(Color.BLACK);
+      g.setFont(g.getFont().deriveFont(14f));
+      g.drawString("Cell Information", 730, 30);
+      g.setFont(g.getFont().deriveFont(12f));
+      g.drawString("Location: " + hoverCell.col + hoverCell.row, 730, 50);
+      g.drawString("Type: " + hoverCell.getCellType().getName(), 730, 70);
+      List<FoodItem> itemsAtLocation = foodManager.getItemsAt(mouseLoc);
       if (!itemsAtLocation.isEmpty()) {
-        g.drawString("Items: " + itemsAtLocation.size(), 740, 110);
+        g.drawString("Items found: " + itemsAtLocation.size(), 730, 90);
         for (int i = 0; i < Math.min(itemsAtLocation.size(), 3); i++) {
-          g.drawString("- " + itemsAtLocation.get(i).getName(), 750, 130 + i * 15);
+          g.drawString("• " + itemsAtLocation.get(i).getName(), 740, 110 + i * 15);
         }
+      } else {
+        g.drawString("No items here", 730, 90);
       }
+    } else {
+      g.setColor(Color.BLACK);
+      g.setFont(g.getFont().deriveFont(14f));
+      g.drawString("Grid Game", 730, 30);
+      g.setFont(g.getFont().deriveFont(12f));
+      g.drawString("Move mouse over cells", 730, 50);
+      g.drawString("to see information", 730, 70);
     }
-    
-    // Display ecosystem statistics
     g.setColor(Color.BLACK);
-    g.drawString("Total Items: " + ecosystemManager.getTotalItemCount(), 740, 200);
-    g.drawString("Actors: " + actors.size(), 740, 220);
-    
-    // Display actor hunger levels
-    int yOffset = 240;
-    for (Actor actor : actors) {
-      g.drawString(actor.getActorType() + " Hunger: " + actor.getHungerLevel() + "/" + actor.getMaxHunger(), 740, yOffset);
-      yOffset += 20;
-    }
+    g.setFont(g.getFont().deriveFont(14f));
+    g.drawString("Game Statistics", 730, 150);
+    g.setFont(g.getFont().deriveFont(12f));
+    g.drawString("Total Items: " + foodManager.getItemCount(), 730, 170);
+    g.drawString("Animals: " + actors.size(), 730, 190);
+    g.setFont(g.getFont().deriveFont(14f));
+    g.drawString("Legend", 730, 220);
+    g.setFont(g.getFont().deriveFont(10f));
+    g.drawString("Grass (Green) - Water (Blue)", 730, 240);
+    g.drawString("Sand (Beige) - Rock (Gray)", 730, 255);
+    g.drawString("Bone (Beige) - Fish (Orange) - Seed (Brown)", 730, 270);
+    g.drawString("Cat (Blue) - Dog (Yellow) - Bird (Green)", 730, 285);
   }
 }

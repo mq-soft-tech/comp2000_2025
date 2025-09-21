@@ -1,49 +1,31 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
-
-/**
- * Abstract base class for different types of cells in the ecosystem.
- * Demonstrates inheritance by providing common functionality while allowing
- * specialized behavior for different terrain types.
- */
 public abstract class CellType {
-    protected Color baseColor;
-    protected Color highlightColor;
-    protected String typeName;
+    protected Color color;
+    protected String name;
     
-    public CellType(Color baseColor, Color highlightColor, String typeName) {
-        this.baseColor = baseColor;
-        this.highlightColor = highlightColor;
-        this.typeName = typeName;
+    public CellType(Color color, String name) {
+        this.color = color;
+        this.name = name;
     }
     
-    /**
-     * Paint the cell with its specific appearance
-     */
-    public abstract void paint(Graphics g, int x, int y, int size, boolean isHighlighted);
-    
-    /**
-     * Get the movement cost for actors moving through this cell type
-     */
-    public abstract int getMovementCost();
-    
-    /**
-     * Check if this cell type can support plant life (for food generation)
-     */
-    public abstract boolean canSupportLife();
-    
-    /**
-     * Get the type name for display purposes
-     */
-    public String getTypeName() {
-        return typeName;
+    public void paint(Graphics g, int x, int y, int size, boolean isHighlighted) {
+        if (isHighlighted) {
+            g.setColor(new Color(200, 200, 200));
+        } else {
+            g.setColor(color);
+        }
+        g.fillRect(x, y, size, size);
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y, size, size);
+        drawPattern(g, x, y, size);
     }
     
-    /**
-     * Get the base color of this cell type
-     */
-    public Color getBaseColor() {
-        return baseColor;
+    protected void drawPattern(Graphics g, int x, int y, int size) {
+
+    }
+    
+    public String getName() {
+        return name;
     }
 }

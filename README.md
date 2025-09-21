@@ -1,14 +1,9 @@
-# Ecosystem Simulation Game
+# Grid Game - Animal World Simulation
 
-## Overview
-
-This project extends the basic grid-based game from week 5 into a comprehensive ecosystem simulation. The game features diverse terrain types, a food system with different items, and animal behaviors that demonstrate intelligent use of inheritance, interfaces, and generics in Java.
+## Project Overview
+The game that I built in this project is a java-based grid game. In this, I have considered different types of animal habitat and their food habits according to various regions. I have used the core OOP concepts in this game.
 
 ## How to Compile and Run
-
-### Prerequisites
-- Java 11 or Java 21 (both versions are supported)
-- No additional dependencies required
 
 ### Compilation
 ```bash
@@ -22,166 +17,135 @@ cd src
 java Main
 ```
 
-The game will open in a 1024x720 window with a 20x20 grid showing different terrain types and food items scattered throughout.
+## Requirements
+- Java 11 or Java 21 (both versions are supported)
+- No additional dependencies required
 
-## Game Features
-
-### Terrain System
-The grid now features four different cell types:
-- **Grass** (Green) - Easy to traverse, supports life, low movement cost
-- **Water** (Blue) - Difficult to traverse, doesn't support land life, high movement cost  
-- **Sand** (Beige) - Moderate traversal, limited life support, medium movement cost
-- **Rock** (Gray) - Very difficult to traverse, no life support, highest movement cost
-
-### Food System
-Three types of food items are scattered throughout the ecosystem:
-- **Bone** (Beige) - Can be consumed by dogs, provides 8 nutrition
-- **Fish** (Orange) - Can be consumed by cats, provides 6 nutrition
-- **Seed** (Brown) - Can be consumed by birds, provides 4 nutrition
-
-### Animal Behavior
-Animals now have hunger systems and can consume appropriate food items:
-- **Cat** (Blue) - Can eat fish, max hunger: 10
-- **Dog** (Yellow) - Can eat bones, max hunger: 12
-- **Bird** (Green) - Can eat seeds, max hunger: 8
-
-## Design Patterns and Java Concepts
-
-### Inheritance
-
-#### Cell Type Hierarchy
-The most significant use of inheritance is in the cell type system:
-
+## File Structure
 ```
-CellType (abstract)
+├── Main.java
+├── Stage.java
+├── Grid.java
+├── Cell.java
+├── Actor.java
+├── CellType.java
+├── Item.java
+├── FoodItem.java
+├── ItemManager.java
+├── Consumable.java
+├── [Animals]
+    ├── Cat.java
+    ├── Dog.java
+    ├── Bird.java
+├── [Cell Types]        
+    ├── GrassCell.java
+    ├── WaterCell.java
+    ├── SandCell.java
+└── [Food Items]        
+    ├── Bone.java
+    ├── Fish.java
+    ├── Seed.java
+```
+
+## Features
+- **Interactive Grid**: 20x20 grid 
+- **Cell Types**: Three types of cells
+  - Grass
+  - Sand
+  - Water
+- **Animals**: Three types of animals with distinct visual representations
+  - Cats (blue)
+  - Dogs (yellow)
+  - Birds (green)
+- **Food System**: Different food items scattered across the grid
+  - Bone (For Dogs)
+  - Fish (For Cats)
+  - Seed (For Birds)
+- **Information**: When we hover the mouse over the grid, we get the cell and item informations on the right side of the screen.
+- **Visual Effects**: Shadows, Colored element
+
+## Class Structure
+
+### Core Classes
+- **Main**: Entry point and window management
+- **Stage**: Game logic and rendering coordinator
+- **Grid**: Manages the 20x20 cell grid
+- **Cell**: Individual grid cell with position and type
+
+## Technical Implementation
+
+### 1. Interface Usage - Consumable
+**Definition:** It is a type which is used to define a set of methods that a class needs to implement
+
+**Why I used it:**
+- I used to determine which animal is gonna eat which one.
+- It also helps to enable the polymorphic food comption behaviour.
+
+**How I implemented it:**
+```java
+public interface Consumable {
+    boolean canBeEatenBy(String actorType);
+}
+```
+
+The FoodItem class applies this interface. Through this, it determines whether the food is consumable for the animal or not. This design is helpful because:
+- It separates the concept of "being edible" from the item hierarchy
+- Allows for future expansion (any class could implement Consumable)
+- Enables type-safe food interaction logic
+
+### 2. Inheritance:
+**Definition:** Inheritance means a class that possess all the methods and properties of another class
+### Actor Hierarchy (Inheritance)
+```
+Actor
+├── Cat
+├── Dog
+└── Bird
+```
+
+**Why:** All the characters that I used here have common behavior that includes painting, location management and their own unique appearance.
+
+**How:** Though I have used the same class and method for all the species, but due to use of overrides drawDetails() the unique features e.g.whiskers for cats, floppy ears for dogs, beaks for birds are expressed.
+
+### Cell Type Hierarchy (Inheritance)
+```
+CellType
 ├── GrassCell
-├── WaterCell  
+├── WaterCell
 ├── SandCell
 └── RockCell
 ```
 
-**Why this demonstrates good inheritance design:**
-- **Common Interface**: All cell types share the same contract (paint, getMovementCost, canSupportLife)
-- **Specialized Behavior**: Each cell type has unique visual appearance and gameplay properties
-- **Polymorphism**: The Cell class can work with any CellType without knowing the specific type
-- **Extensibility**: New cell types can be easily added by extending CellType
+**Why:** Though I considered basic painting for all the cells but they differ due to different visual patterns.
 
-#### Item Hierarchy
+**How:** I created the background with basic class, but the subclasses override drawPattern() for region specified details.
+
+### Item Hierarchy (Inheritance)
 ```
-Item (abstract)
-└── FoodItem (abstract)
+Item
+└── FoodItem
     ├── Bone
     ├── Fish
     └── Seed
 ```
 
-**Why this demonstrates good inheritance design:**
-- **Code Reuse**: Common item functionality is shared through the hierarchy
-- **Specialized Behavior**: Each food type has unique appearance and consumption rules
-- **Type Safety**: The type system ensures only appropriate items can be consumed by specific animals
+**Why:** The items that I used have common behavior like their positions and basic features, but food logics are specified for each item.
 
-### Interfaces
+**How:** Due to different levels of inheritance, FoodItem adds logic for consumption. This specifies unique visuals for each different group.
 
-#### Consumable Interface
-```java
-public interface Consumable {
-    boolean canBeConsumedBy(String actorType);
-    int getNutritionalValue();
-    int consume();
-}
-```
+### 3. Generic Management
+**Definition:** It allows us to use class, interfaces for different types.
+- **ItemManager\<T>**: This is a generic class which is used to manage the items.
 
-**Why this demonstrates good interface design:**
-- **Contract Definition**: Clearly defines what it means to be consumable
-- **Flexibility**: Any class can implement Consumable, not just food items
-- **Separation of Concerns**: Consumption behavior is separate from item appearance
-- **Testability**: Easy to mock and test consumption behavior
+**Why I used generics:**
+- Instead of using different methods and class, I have used Generic class to make it more easier to manage collection of items
+- Through this, I got the advantage of managing the items with the same code rather than writing the same thing again and again.
+- I just need to check Compiler error instead of checking run time error
 
-#### Movable and Feeder Interfaces
-```java
-public interface Movable {
-    void moveTo(Point newLocation);
-    Point getCurrentLocation();
-    boolean canMoveTo(Point location);
-}
 
-public interface Feeder {
-    boolean consumeItem(Consumable item);
-    int getHungerLevel();
-    boolean isHungry();
-}
-```
-
-**Why this demonstrates good interface design:**
-- **Multiple Inheritance**: Actors can implement both Movable and Feeder
-- **Behavioral Contracts**: Defines specific capabilities without implementation details
-- **Flexibility**: Different actor types can have different movement/feeding behaviors
-
-### Generics
-
-#### Generic Item Management
-The most sophisticated use of generics is in the item management system:
-
-```java
-public class ItemManager<T extends Item> {
-    private List<T> items;
-    // ... type-safe operations
-}
-
-public class EcosystemManager {
-    private Map<String, ItemManager<? extends Item>> managers;
-    // ... manages multiple item types
-}
-```
-
-**Why this demonstrates excellent generics usage:**
-- **Type Safety**: Compile-time checking ensures only appropriate items are managed
-- **Code Reuse**: Single ItemManager class handles any type of item
-- **Flexibility**: Can manage different item types with the same code
-- **Custom Generic Class**: Goes beyond simple collections to create domain-specific generic types
-
-#### Generic Collections
-```java
-List<Actor> actors;
-List<Polygon> display;
-Optional<Cell> cellAtPoint(Point p);
-```
-
-**Why this demonstrates good generics usage:**
-- **Type Safety**: Prevents ClassCastException at runtime
-- **Code Clarity**: Makes the code more readable and self-documenting
-- **IDE Support**: Better autocomplete and error detection
-
-## Architecture Benefits
-
-### Maintainability
-- **Single Responsibility**: Each class has a clear, focused purpose
-- **Open/Closed Principle**: Easy to add new cell types, items, or actors without modifying existing code
-- **Dependency Inversion**: High-level modules depend on abstractions (interfaces) not concretions
-
-### Extensibility
-- **New Cell Types**: Simply extend CellType and add to Grid generation
-- **New Items**: Extend FoodItem and register with EcosystemManager
-- **New Actors**: Extend Actor and implement required interfaces
-- **New Behaviors**: Add new interfaces and implement them in existing classes
-
-### Testability
-- **Interface-Based**: Easy to create mock objects for testing
-- **Dependency Injection**: Components can be easily replaced for testing
-- **Isolated Concerns**: Each component can be tested independently
-
-## Gameplay Instructions
-
-1. **Explore the Terrain**: Move your mouse over different cells to see their properties
-2. **Find Food**: Look for small colored items scattered around the grid
-3. **Watch Animal Behavior**: Animals show hunger indicators (red dots) when they need food
-4. **Observe Terrain Effects**: Different terrain types have different movement costs and life support
-
-## Technical Implementation Notes
-
-- **Random Terrain Generation**: Uses a fixed seed for reproducible terrain patterns
-- **Collision Detection**: Items and actors use point-in-rectangle collision detection
-- **Memory Management**: Items are managed through generic collections for efficient memory usage
-- **Rendering Pipeline**: Separate rendering for terrain, items, and actors with proper layering
-
-This implementation demonstrates a deep understanding of object-oriented design principles and Java's type system, creating a maintainable, extensible, and well-structured codebase that showcases the power of inheritance, interfaces, and generics in real-world applications.
+## Graphic feature:
+- I have customized different polygons to express animal shapes.
+- Further, shadow effects have added depth to each object.
+- To differentiate regions, I have used different colors.
+- The mouse interaction is presented real time based for better understanding.
+- Finally, the statistical data are presented in the information panel.

@@ -1,11 +1,12 @@
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Polygon;
 import java.util.ArrayList;
 
 public class Dog extends Actor {
   public Dog(Cell inLoc) {
-    super(inLoc, "Dog", 12);
-    color = Color.YELLOW;
+    super(inLoc, "Dog");
+    color = new Color(255, 200, 100);
     display = new ArrayList<Polygon>();
     Polygon ear1 = new Polygon();
     ear1.addPoint(loc.x + 5, loc.y + 5);
@@ -23,5 +24,18 @@ public class Dog extends Actor {
     display.add(face);
     display.add(ear1);
     display.add(ear2);
+  }
+  
+  @Override
+  protected void drawDetails(Graphics g) {
+    g.setColor(Color.BLACK);
+    g.fillOval(loc.x + 12, loc.y + 12, 3, 3);
+    g.fillOval(loc.x + 20, loc.y + 12, 3, 3);
+    g.setColor(Color.BLACK);
+    g.fillOval(loc.x + 16, loc.y + 18, 2, 2);
+    g.setColor(Color.BLACK);
+    g.drawLine(loc.x + 16, loc.y + 20, loc.x + 16, loc.y + 22);
+    g.drawLine(loc.x + 16, loc.y + 22, loc.x + 14, loc.y + 24);
+    g.drawLine(loc.x + 16, loc.y + 22, loc.x + 18, loc.y + 24);
   }
 }
