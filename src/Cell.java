@@ -7,22 +7,18 @@ public class Cell extends Rectangle {
   static int size = 35;
   char col;
   int row;
+  CellType cellType;
 
-  public Cell(char inCol, int inRow, int x, int y) {
+  public Cell(char inCol, int inRow, int x, int y, CellType cellType) {
     super(x, y, size, size);
     col = inCol;
     row = inRow;
+    this.cellType = cellType;
   }
 
   public void paint(Graphics g, Point mousePos) {
-    if(contains(mousePos)) {
-      g.setColor(Color.GRAY);
-    } else {
-      g.setColor(Color.WHITE);
-    }
-    g.fillRect(x, y, size, size);
-    g.setColor(Color.BLACK);
-    g.drawRect(x, y, size, size);
+    boolean isHighlighted = contains(mousePos);
+    cellType.paint(g, x, y, size, isHighlighted);
   }
 
   public boolean contains(Point p) {
@@ -31,5 +27,17 @@ public class Cell extends Rectangle {
     } else {
       return false;
     }
+  }
+  
+  public CellType getCellType() {
+    return cellType;
+  }
+  
+  public int getMovementCost() {
+    return cellType.getMovementCost();
+  }
+  
+  public boolean canSupportLife() {
+    return cellType.canSupportLife();
   }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Bird extends Actor {
   public Bird(Cell inLoc) {
-    loc = inLoc;
+    super(inLoc, "Bird", 8);
     color = Color.GREEN;
     display = new ArrayList<Polygon>();
     Polygon wing1 = new Polygon();

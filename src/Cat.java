@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Cat extends Actor {
   public Cat(Cell inLoc) {
-    loc = inLoc;
+    super(inLoc, "Cat", 10);
     color = Color.BLUE;
     display = new ArrayList<Polygon>();
     Polygon ear1 = new Polygon();
