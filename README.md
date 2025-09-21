@@ -1,4 +1,4 @@
-# Grid Game - Animal World Simulation
+# Grid Game
 
 ## Project Overview
 The game that I built in this project is a java-based grid game. In this, I have considered different types of animal habitat and their food habits according to various regions. I have used the core OOP concepts in this game.
