@@ -3,6 +3,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Simple item manager using generics.
+ * Demonstrates basic generics usage.
+ */
 public class ItemManager<T extends Item> {
     private List<T> items;
     

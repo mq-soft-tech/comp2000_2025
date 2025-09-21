@@ -27,11 +27,16 @@ public class Cat extends Actor {
   
   @Override
   protected void drawDetails(Graphics g) {
+    // Draw cat eyes
     g.setColor(Color.BLACK);
     g.fillOval(loc.x + 12, loc.y + 18, 3, 3);
     g.fillOval(loc.x + 20, loc.y + 18, 3, 3);
+    
+    // Draw cat nose
     g.setColor(Color.PINK);
     g.fillOval(loc.x + 16, loc.y + 22, 2, 2);
+    
+    // Draw cat whiskers
     g.setColor(Color.BLACK);
     g.drawLine(loc.x + 8, loc.y + 20, loc.x + 12, loc.y + 22);
     g.drawLine(loc.x + 8, loc.y + 24, loc.x + 12, loc.y + 24);

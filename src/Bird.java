@@ -28,11 +28,16 @@ public class Bird extends Actor {
   
   @Override
   protected void drawDetails(Graphics g) {
+    // Draw bird eye
     g.setColor(Color.BLACK);
     g.fillOval(loc.x + 16, loc.y + 12, 2, 2);
+    
+    // Draw bird beak
     g.setColor(new Color(255, 200, 100));
     g.fillPolygon(new int[]{loc.x + 17, loc.x + 19, loc.x + 17}, 
                   new int[]{loc.y + 15, loc.y + 16, loc.y + 17}, 3);
+    
+    // Draw wing patterns
     g.setColor(new Color(80, 160, 80));
     g.drawLine(loc.x + 8, loc.y + 8, loc.x + 12, loc.y + 12);
     g.drawLine(loc.x + 22, loc.y + 8, loc.x + 26, loc.y + 12);

@@ -18,7 +18,11 @@ public class Stage {
     actors.add(new Cat(grid.cellAtColRow(0, 0).get()));
     actors.add(new Dog(grid.cellAtColRow(0, 15).get()));
     actors.add(new Bird(grid.cellAtColRow(12, 9).get()));
+    
+    // Initialize food manager
     foodManager = new ItemManager<FoodItem>();
+    
+    // Add some food items
     addRandomFoodItems();
   }
   
@@ -48,14 +52,22 @@ public class Stage {
 
   public void paint(Graphics g, Point mouseLoc) {
     grid.paint(g, mouseLoc);
+    
+    // Paint all food items
     foodManager.paintAll(g);
+    
+    // Paint all actors
     for(Actor a: actors) {
       a.paint(g);
     }
+    
+    // Draw info panel background
     g.setColor(new Color(240, 240, 240));
     g.fillRect(720, 10, 290, 300);
     g.setColor(Color.BLACK);
     g.drawRect(720, 10, 290, 300);
+    
+    // Display information about the cell under the mouse
     Optional<Cell> underMouse = grid.cellAtPoint(mouseLoc);
     if(underMouse.isPresent()) {
       Cell hoverCell = underMouse.get();
@@ -65,6 +77,8 @@ public class Stage {
       g.setFont(g.getFont().deriveFont(12f));
       g.drawString("Location: " + hoverCell.col + hoverCell.row, 730, 50);
       g.drawString("Type: " + hoverCell.getCellType().getName(), 730, 70);
+      
+      // Show items at this location
       List<FoodItem> itemsAtLocation = foodManager.getItemsAt(mouseLoc);
       if (!itemsAtLocation.isEmpty()) {
         g.drawString("Items found: " + itemsAtLocation.size(), 730, 90);
@@ -82,12 +96,16 @@ public class Stage {
       g.drawString("Move mouse over cells", 730, 50);
       g.drawString("to see information", 730, 70);
     }
+    
+    // Display statistics
     g.setColor(Color.BLACK);
     g.setFont(g.getFont().deriveFont(14f));
     g.drawString("Game Statistics", 730, 150);
     g.setFont(g.getFont().deriveFont(12f));
     g.drawString("Total Items: " + foodManager.getItemCount(), 730, 170);
     g.drawString("Animals: " + actors.size(), 730, 190);
+    
+    // Draw legend
     g.setFont(g.getFont().deriveFont(14f));
     g.drawString("Legend", 730, 220);
     g.setFont(g.getFont().deriveFont(10f));

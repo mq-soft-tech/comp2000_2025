@@ -1,6 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Grass cell - green cell with grass pattern.
+ * Demonstrates basic inheritance.
+ */
 public class GrassCell extends CellType {
     
     public GrassCell() {
@@ -9,6 +13,7 @@ public class GrassCell extends CellType {
     
     @Override
     protected void drawPattern(Graphics g, int x, int y, int size) {
+        // Draw grass blades
         g.setColor(new Color(30, 120, 30));
         for (int i = 0; i < 4; i++) {
             int bladeX = x + 5 + i * 7;

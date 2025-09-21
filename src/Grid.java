@@ -17,6 +17,7 @@ public class Grid {
   }
   
   private CellType generateCellType() {
+    // Simple random cell type generation
     int type = random.nextInt(4);
     switch (type) {
       case 0: return new GrassCell();

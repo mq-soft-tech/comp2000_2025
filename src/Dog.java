@@ -28,11 +28,16 @@ public class Dog extends Actor {
   
   @Override
   protected void drawDetails(Graphics g) {
+    // Draw dog eyes
     g.setColor(Color.BLACK);
     g.fillOval(loc.x + 12, loc.y + 12, 3, 3);
     g.fillOval(loc.x + 20, loc.y + 12, 3, 3);
+    
+    // Draw dog nose
     g.setColor(Color.BLACK);
     g.fillOval(loc.x + 16, loc.y + 18, 2, 2);
+    
+    // Draw dog mouth
     g.setColor(Color.BLACK);
     g.drawLine(loc.x + 16, loc.y + 20, loc.x + 16, loc.y + 22);
     g.drawLine(loc.x + 16, loc.y + 22, loc.x + 14, loc.y + 24);
