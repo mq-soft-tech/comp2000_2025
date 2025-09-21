@@ -1,8 +1,22 @@
-# Welcome to COMP2000 - Object Oriented Programming Practices
-## Session 2, 2025
+# Assignment 1 – Enhancements to Week 5 Grid
 
-Please ensure that you follow the weekly updates in this repository
+## How to Compile & Run
+javac -d out $(find src -name "*.java")
+java -cp out Main
 
-You are free to clone this repository into your own hosted git environment, such as Github, Bitbucket, or Gitlab.
+## Summary of My Work
+- Added **GrassCell**, **SandCell**, and **WaterCell** classes extending `Cell`.
+- Created **Terrain** interface with `moveCost()` method.
+- Updated **Grid** to place a patch of grass, a strip of sand, and a water column.
+- Updated **Stage** to show cell type & move cost when hovering.
+- Created **Group<T>** generic class and used it in `Stage` to manage `Actor` objects.
 
-*However*, please be aware that any repository containing your assignment code **must** be made private. Any repository with assignment code that is public available, or found to be shared with other students, will be considered a violation of the academic integrity policy.
+## Design Rationale
+- **Inheritance:** Allows new cell types to be added without modifying grid logic, demonstrating polymorphism.
+- **Interfaces:** `Terrain` decouples the concept of movement cost from the `Cell` hierarchy, making it easy to add more terrain types in the future.
+- **Generics:** `Group<T>` is a reusable, type-safe container that makes actor management cleaner and improves code readability.
+
+## Repository Details
+- Based on the **week05** branch of the class repository.
+- All work committed on a new branch `assignment1` with clear commit messages.
+- `.gitignore` added to keep build outputs and `.DS_Store` out of version control.
