@@ -2,7 +2,7 @@ import java.util.List;
 
 public class MoveLeft implements MoveStrategy {
   @Override
-  public Cell chooseNextLoc(List<Cell> possibleLocs, Actor currActor, List<Actor> otherActors) {
+  public Cell chooseNextLoc(List<Cell> possibleLocs) {
     Cell currLM = possibleLocs.get(0);
     for(Cell c: possibleLocs) {
       if(c.leftOfComparison(currLM) < 0) {
@@ -16,3 +16,20 @@ public class MoveLeft implements MoveStrategy {
     return "left-most movement";
   }
 }
+/*
+ * MoveStrategey MoveLeft(List<Cell> possibleLocs, Actor currActor, List<Actor> otherActors) -> {
+ * Cell currLm = possibleLos.get(0);
+ *    for(Cell c: possibleLocs) {
+      if(c.leftOfComparison(currLM) < 0) {
+        currLM = c;
+      }
+    }
+    return currLM;
+ * 
+ * }
+ */
+
+
+
+
+

@@ -40,9 +40,12 @@ public abstract class Actor implements Pulse {
   public void setLocation(Cell inLoc) {
     loc = inLoc;
     if(loc.row % 2 == 0) {
-      mover = new MoveRandomly();
+      mover = new MoveRandomly();// lambda 
+//default <V> Function<V,R> compose(Function<? super V,? extends T> before)
+//Cell chooseNextLoc(List<Cell> possibleLocs, Actor currActor, List<Actor> otherActors);
+//
     } else {
-      mover = new MoveLeft();
+      mover = new MoveLeft();// lambda
     }
     setPoly();
   }
