@@ -50,6 +50,8 @@ public abstract class Actor implements Pulse {
     } else {
       //mover = new MoveLeft(); // lambda expression
       mover = (List<Cell> possibleLocs) ->{
+        // another way
+        //possibleLocs.stream().min (Cell:: leftOfComparison).orElseThrow();
         Cell currLM = possibleLocs.get(0);
         for(Cell c: possibleLocs) {
           if(c.leftOfComparison(currLM) < 0) {
