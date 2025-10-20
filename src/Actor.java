@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Actor implements Pulse {
   Color baseColor, color;
@@ -40,9 +41,25 @@ public abstract class Actor implements Pulse {
   public void setLocation(Cell inLoc) {
     loc = inLoc;
     if(loc.row % 2 == 0) {
-      mover = new MoveRandomly();
+      //mover = new MoveRandomly(); remove the subclass
+      mover = (List<Cell> possibleLocs) -> {
+        int i = (new Random()).nextInt(possibleLocs.size());
+        return possibleLocs.get(i);
+      };
+      
     } else {
-      mover = new MoveLeft();
+      //mover = new MoveLeft(); // lambda expression
+      mover = (List<Cell> possibleLocs) ->{
+        // another way
+        //possibleLocs.stream().min (Cell:: leftOfComparison).orElseThrow();
+        Cell currLM = possibleLocs.get(0);
+        for(Cell c: possibleLocs) {
+          if(c.leftOfComparison(currLM) < 0) {
+          currLM = c;
+          }
+        }
+      return currLM;
+      };
     }
     setPoly();
   }

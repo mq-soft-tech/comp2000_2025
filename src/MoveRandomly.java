@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class MoveRandomly implements MoveStrategy {
   @Override
-  public Cell chooseNextLoc(List<Cell> possibleLocs, Actor currActor, List<Actor> otherActors) {
+  public Cell chooseNextLoc(List<Cell> possibleLocs) {
     int i = (new Random()).nextInt(possibleLocs.size());
     return possibleLocs.get(i);
   }
